@@ -1,0 +1,17 @@
+<class>
+<keyword>class</keyword>
+<identifier>Square</identifier>
+<classVarDec>
+<keyword>field</keyword>
+<identifier>x</identifier>
+<symbol>,</symbol>
+<identifier>y</identifier>
+<symbol>;</symbol>
+</classVarDec>
+<classVarDec>
+<keyword>field</keyword>
+<identifier>size</identifier>
+<symbol>;</symbol>
+</classVarDec>
+<classVarDec>
+<keyword></keyword>

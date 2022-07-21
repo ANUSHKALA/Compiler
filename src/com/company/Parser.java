@@ -54,23 +54,27 @@ public class Parser {
         }
         else {
             System.out.println("");
+            pw.print("");
             error("class2:" + tokenizer.tokenType());
         }
         requireSymbol('{');
 
         compileClassVarDec();
-        parseSubroutine();
+        compileSubroutine();
 
         requireSymbol('}');
         tokenizer.advance();
         if (tokenizer.hasMoreTokens())
         {
             System.out.println(tokenizer.index+""+tokenizer.length);
+            pw.print(tokenizer.index+""+tokenizer.length);
+
             pw.close();
             throw new IllegalStateException("Unexpected tokens");
         }
 
         System.out.println("</class>\n");
+        pw.print("</class>\n");
         pw.close();
     }
 
@@ -127,7 +131,7 @@ public class Parser {
 
     }
 
-    public void parseSubroutine() {
+    public void compileSubroutine() {
         tokenizer.advance();
 
         if (tokenizer.tokenType().equalsIgnoreCase("SYMBOL") && tokenizer.symbol() == '}') {
@@ -173,10 +177,10 @@ public class Parser {
 
         requireSymbol(')');
 
-        parseSubroutine();
+        compileSubroutine();
         System.out.println("</subroutineDec>\n");
         pw.print("</subroutineDec>\n");
-        parseSubroutine();
+        compileSubroutine();
     }
 
     public void compileParameterList()
@@ -356,6 +360,7 @@ public class Parser {
             {
                 expExist = true;
                 System.out.println("<symbol>[</symbol>\n");
+                pw.write("<symbol>[</symbol>\n");
                 compileExpression();
 
                 tokenizer.advance();
