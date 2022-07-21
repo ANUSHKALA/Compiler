@@ -120,6 +120,7 @@ public class Tokenizer {
 
     public String tokenType(){
         String token = Tokens[index];
+        System.out.println(token);
         try{
             Integer.parseInt(token);
             return "INT_CONST";
@@ -149,7 +150,7 @@ public class Tokenizer {
     public char symbol(){
         if(this.tokenType().equalsIgnoreCase("SYMBOL")){
 
-            return Tokens[index].charAt(1);
+            return Tokens[index].charAt(0);
         }
         return '\b';
     }
@@ -191,6 +192,12 @@ public class Tokenizer {
         if("+-*/&|<>=".contains(Tokens[index]))
             return true;
         return false;
+    }
+
+    public static void main(String[] args){
+
+
+
     }
 
 }

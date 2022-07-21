@@ -36,21 +36,26 @@ public class Parser {
 
     }
 
-    public void compileClass()
-    {
-        if((tokenizer.tokenType().equalsIgnoreCase("KEYWORD")&&tokenizer.keyWord().equalsIgnoreCase("class")))
-            error(tokenizer.tokenType()+" class");
+    public void compileClass() {
+        if ((!tokenizer.tokenType().equalsIgnoreCase("KEYWORD") && tokenizer.keyWord().equalsIgnoreCase("class")))
+            error(tokenizer.tokenType() + " class");
 
-//        System.out.println("<class>\n");
-//
-//        System.out.println("<keyword>class</keyword>\n");
+        System.out.println("<class>\n");
+        pw.print("<class>\n");
+
+        System.out.println("<keyword>class</keyword>\n");
+        pw.print("<keyword>class</keyword>\n");
+
 
         tokenizer.advance();
-        if(tokenizer.tokenType().equalsIgnoreCase("IDENTIFIER"))
+        if (tokenizer.tokenType().equalsIgnoreCase("IDENTIFIER")){
             System.out.println("<identifier>" + tokenizer.identifier() + "</identifier>\n");
-        else
-            error("class2:"+tokenizer.tokenType());
-
+            pw.print("<identifier>" + tokenizer.identifier() + "</identifier>\n");
+        }
+        else {
+            System.out.println("");
+            error("class2:" + tokenizer.tokenType());
+        }
         requireSymbol('{');
 
         compileClassVarDec();
@@ -81,62 +86,70 @@ public class Parser {
             tokenizer.Back();
         }
         System.out.println("<classVarDec>\n");
+        pw.print("<classVarDec>\n");
 
         if (!tokenizer.keyWord().equalsIgnoreCase("STATIC") && !tokenizer.keyWord().equalsIgnoreCase("FIELD"))
             error("classVarDec2");
 
         System.out.println("<keyword>"+tokenizer.keyWord()+"</keyword>\n");
+        pw.print("<keyword>"+tokenizer.keyWord()+"</keyword>\n");
 
         tokenType();
 
         do {
             tokenizer.advance();
-            if (tokenizer.tokenType().equalsIgnoreCase("IDENTIFIER"))
+            if (tokenizer.tokenType().equalsIgnoreCase("IDENTIFIER")) {
                 System.out.println("<identifier>" + tokenizer.identifier() + "</identifier>\n");
+                pw.print("<identifier>" + tokenizer.identifier() + "</identifier>\n");
+            }
 
             tokenizer.advance();
 
-            if (!tokenizer.tokenType().equalsIgnoreCase("SYMBOL") || (tokenizer.symbol() != ',' && tokenizer.symbol() != ';'))
-            {
+            if (!tokenizer.tokenType().equalsIgnoreCase("SYMBOL") || (tokenizer.symbol() != ',' && tokenizer.symbol() != ';')){
                 error("classVarDec3");
             }
-            if (tokenizer.symbol() == ',')
+            if (tokenizer.symbol() == ',') {
                 System.out.println("<symbol>,</symbol>\n");
-            else
-            {
+                pw.print("<symbol>,</symbol>\n");
+            }
+            else {
                 System.out.println("<symbol>;</symbol>\n");
+                pw.print("<symbol>;</symbol>\n");
+
                 break;
             }
         }while(true);
 
         System.out.println("</classVarDec>\n");
+        pw.print("</classVarDec>\n");
 
         compileClassVarDec();
 
     }
 
-    public void parseSubroutine()
-    {
+    public void parseSubroutine() {
         tokenizer.advance();
 
-        if (tokenizer.tokenType().equalsIgnoreCase("SYMBOL") && tokenizer.symbol() == '}')
-        {
+        if (tokenizer.tokenType().equalsIgnoreCase("SYMBOL") && tokenizer.symbol() == '}') {
             tokenizer.Back();
             return;
         }
 
-        if (!tokenizer.tokenType().equalsIgnoreCase("KEYWORD") || !(tokenizer.keyWord().equalsIgnoreCase("constructor") || tokenizer.keyWord().equalsIgnoreCase("function") || tokenizer.keyWord().equalsIgnoreCase("method")))
-        {
-            error("SubRoutine1=>"+tokenizer.tokenType()+"=>"+tokenizer.keyWord());
+        if (!tokenizer.tokenType().equalsIgnoreCase("KEYWORD") || !(tokenizer.keyWord().equalsIgnoreCase("constructor") || tokenizer.keyWord().equalsIgnoreCase("function") || tokenizer.keyWord().equalsIgnoreCase("method"))) {
+            error("SubRoutine1=>" + tokenizer.tokenType() + "=>" + tokenizer.keyWord());
         }
 
         System.out.println("<subroutineDec>\n");
+        pw.print("<subroutineDec>\n");
         System.out.println("<keyword>" + tokenizer.keyWord() + "</keyword>\n");
+        pw.print("<keyword>" + tokenizer.keyWord() + "</keyword>\n");
 
 
         tokenizer.advance();
-        if (tokenizer.tokenType().equalsIgnoreCase("KEYWORD") && tokenizer.keyWord().equalsIgnoreCase("void"))
+        if (tokenizer.tokenType().equalsIgnoreCase("KEYWORD") && tokenizer.keyWord().equalsIgnoreCase("void")){
             System.out.println("<keyword>void</keyword>\n");
+            pw.print("<keyword>void</keyword>\n");
+        }
         else
         {
             tokenizer.Back();
@@ -148,17 +161,21 @@ public class Parser {
             error("SubRoutine2");
 
         System.out.println("<identifier>" + tokenizer.identifier() + "</identifier>\n");
+        pw.print("<identifier>" + tokenizer.identifier() + "</identifier>\n");
 
         requireSymbol('(');
 
         System.out.println("<parameterList>\n");
+        pw.print("<parameterList>\n");
         compileParameterList();
         System.out.println("</parameterList>\n");
+        pw.print("</parameterList>\n");
 
         requireSymbol(')');
 
         parseSubroutine();
         System.out.println("</subroutineDec>\n");
+        pw.print("</subroutineDec>\n");
         parseSubroutine();
     }
 
@@ -180,14 +197,17 @@ public class Parser {
             tokenType();
 
             tokenizer.advance();
-            if (tokenizer.tokenType().equalsIgnoreCase("IDENTIFIER"))
+            if (tokenizer.tokenType().equalsIgnoreCase("IDENTIFIER")) {
                 System.out.println("<identifier>" + tokenizer.identifier() + "</identifier>\n");
-
+                pw.print("<identifier>" + tokenizer.identifier() + "</identifier>\n");
+            }
             tokenizer.advance();
             if (tokenizer.tokenType().equalsIgnoreCase("SYMBOL") && (tokenizer.symbol() == ',' || tokenizer.symbol() == ')'))
             {
-                if (tokenizer.symbol() == ',')
+                if (tokenizer.symbol() == ',') {
                     System.out.println("<symbol>,</symbol>\n");
+                    pw.print("<symbol>,</symbol>\n");
+                }
                 else
                 {
                     tokenizer.Back();
@@ -205,12 +225,15 @@ public class Parser {
 
         compileVarDec();
         System.out.println("<statements>\n");
+        pw.print("<statements>\n");
         compileStatement();
         System.out.println("</statements>\n");
+        pw.print("</statements>\n");
 
         requireSymbol('}');
 
         System.out.println("</subroutineBody>\n");
+        pw.print("</subroutineBody>\n");
     }
 
     public void compileVarDec()
@@ -582,7 +605,6 @@ public class Parser {
     public void error(String n)
     {
         pw.close();
-        System.out.println("noooo");
         throw new IllegalStateException("An error has occured: "+n);
     }
     public void requireSymbol(char symbol)
