@@ -139,6 +139,7 @@ public class Tokenizer {
 
     public String keyWord(){
         if(this.tokenType().equalsIgnoreCase("KEYWORD")){
+            System.out.println("<KEYWORD>"+Tokens[index]+"</KEYWORD>");
 
             return Tokens[index];
         }
@@ -148,7 +149,7 @@ public class Tokenizer {
     public char symbol(){
         if(this.tokenType().equalsIgnoreCase("SYMBOL")){
 
-            return Tokens[index].charAt(0);
+            return Tokens[index].charAt(1);
         }
         return '\b';
     }

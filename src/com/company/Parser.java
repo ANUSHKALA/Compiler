@@ -41,9 +41,9 @@ public class Parser {
         if((tokenizer.tokenType().equalsIgnoreCase("KEYWORD")&&tokenizer.keyWord().equalsIgnoreCase("class")))
             error(tokenizer.tokenType()+" class");
 
-        System.out.println("<class>\n");
-        
-        System.out.println("<keyword>class</keyword>\n");
+//        System.out.println("<class>\n");
+//
+//        System.out.println("<keyword>class</keyword>\n");
 
         tokenizer.advance();
         if(tokenizer.tokenType().equalsIgnoreCase("IDENTIFIER"))
