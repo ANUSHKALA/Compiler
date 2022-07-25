@@ -15,5 +15,3 @@
 <symbol>;</symbol>
 </classVarDec>
 <classVarDec>
-<keyword></keyword>
-<identifier>Square</identifier>

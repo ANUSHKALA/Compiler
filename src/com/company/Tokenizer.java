@@ -8,7 +8,7 @@ public class Tokenizer {
 
     public static int index=0;
     public int length;
-    public String Tokens[]=new String[28375];
+    public String Tokens[]=new String[1000];
     public static Pattern tokenPatterns;
     private ArrayList<String> symbols;
     private static ArrayList<String> keywords;
@@ -36,6 +36,7 @@ public class Tokenizer {
                         Tokens[index++]=match.group();
                 }
             }
+            System.out.println(Arrays.toString(Tokens));
             sc.close();
             length = index;
             index = 0;
@@ -140,7 +141,7 @@ public class Tokenizer {
 
     public String keyWord(){
         if(this.tokenType().equalsIgnoreCase("KEYWORD")){
-            System.out.println("<KEYWORD>"+Tokens[index]+"</KEYWORD>");
+//            System.out.println("<KEYWORD>"+Tokens[index]+"</KEYWORD>");
 
             return Tokens[index];
         }
@@ -192,12 +193,6 @@ public class Tokenizer {
         if("+-*/&|<>=".contains(Tokens[index]))
             return true;
         return false;
-    }
-
-    public static void main(String[] args){
-
-
-
     }
 
 }
